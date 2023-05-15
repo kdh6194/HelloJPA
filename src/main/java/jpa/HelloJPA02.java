@@ -28,21 +28,21 @@ public class HelloJPA02 {
             tx.commit();
 
             // 데이터 조회 : find(객체, 기본키 값)
-            tx.begin();
-                sj = em.find(SungJuk.class,3);
-                em.persist(sj);
-            tx.commit();
+//            tx.begin();
+//                sj = em.find(SungJuk.class,3);
+//                em.persist(sj);
+//            tx.commit();
             // 데이터 수정 : setXxx(변경값)
-            tx.begin();
-                sj = em.find(SungJuk.class,4); // 수정할 객체 찾기
-                sj.setName("지현"); //  값 변경
-                em.persist(sj);
-            tx.commit();
+            //tx.begin();
+                // sj = em.find(SungJuk.class,4); // 수정할 객체 찾기
+                // sj.setName("지현"); //  값 변경
+                // em.persist(sj);
+            //tx.commit();
             // 데이터 삭제 : remove(대상)
-            tx.begin();
-                sj = em.find(SungJuk.class,9); // 수정할 객체 찾기
-                em.remove(sj);
-            tx.commit();
+            // tx.begin();
+            //    sj = em.find(SungJuk.class,15); // 삭제할 객체 찾기
+            //    em.remove(sj);
+            // tx.commit();
         } catch (Exception e){
             e.printStackTrace();
         } finally {
