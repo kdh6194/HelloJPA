@@ -1,49 +1,95 @@
 package jpa;
 
-import model.Department;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import model.Employee;
+
+import javax.persistence.*;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HelloJPA04 {
     public static void main(String[] args) {
-    // jpa 객체 초기화 : emf -> em -> tx
-        // 보통 에러가 발생하는 이유는 persistence.xml에서 잘못 설정해서
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
 
         try {
-            // 데이터 추가 : persist(대상)
-            Department dept = new Department();
-            dept.setDname("IT");
-            dept.setMgrid(103);
-            dept.setLocid(1400);
+            // Criteria 사용준비
+            CriteriaBuilder cb = em.getCriteriaBuilder();
 
-            tx.begin();
-                em.persist(dept);
-            tx.commit();
+            // 사원 데이터 조회
+            CriteriaQuery<Employee> query = cb.createQuery(Employee.class);
+            Root<Employee> eq = query.from(Employee.class); //조회 대상 지정
 
-            // 데이터 조회 : find(객체, 기본키 값)
-            tx.begin();
-                dept = em.find(Department.class,1);
-                em.persist(dept);
-            tx.commit();
-             //데이터 수정 : setXxx(변경값)
-            tx.begin();
-                dept = em.find(Department.class,2); // 수정할 객체 찾기
-                dept.setDname("jobs"); //  값 변경
-                 em.persist(dept);
-            tx.commit();
-             //데이터 삭제 : remove(대상)
-             tx.begin();
-                dept = em.find(Department.class,3); // 삭제할 객체 찾기
-                em.remove(dept);
-             tx.commit();
-        } catch (Exception e){
-            e.printStackTrace();
+            CriteriaQuery<Employee> cq = query.select(eq);
+//            //List<Employee> emps = em.createQuery(cq).getResultList();
+//            List<Employee> emps = em.createQuery(cq.select(eq)).getResultList();
+//
+//            for(Employee emp : emps) {
+//                System.out.println(emp);
+//            }
+            // 사원 데이터 조회 - 이름, 부서번호, 입사일 : multiselect
+            // 컬럼 지정 : 객체.get(변수명)
+//            CriteriaQuery<Object[]> mcq = cb.createQuery(Object[].class);
+//            Root<Employee> me = mcq.from(Employee.class);
+//
+//            mcq.multiselect(me.get("fname"),me.get("deptno"),me.get("hdate"));
+//            List<Object[]> items = em.createQuery(mcq).getResultList();
+//
+//            for(Object[] item : items) {
+//                System.out.println(item[0] + "/" + item[1] + "/" + item[2]);
+//            }
+
+            // 정렬 조회 : 부서번호 기준, orderby
+//            Order deptid = cb.desc(eq.get("deptno"));
+//            cq = query.select(eq).orderBy(deptid);
+//            emps = em.createQuery(cq).getResultList();
+//
+//            for(Employee emp : emps) {
+//                System.out.println(emp);
+//            }
+
+            // 조건 검색 : 직책인 IT_PROG인 사원 조회, where
+//            Predicate jobid = cb.equal(eq.get("jobid"),"IT_PROG");
+//            cq = query.select(eq).where(jobid);
+//            emps = em.createQuery(cq).getResultList();
+//
+//            for(Employee emp : emps) {
+//                System.out.println(emp);
+//            }
+
+            // 조건검색 : 연봉이 20000 이상인 사원 조회
+//            Predicate salGE = cb.ge(eq.get("sal"),20000);
+//            cq = query.select(eq).where(salGE);
+//            List<Employee> emps = em.createQuery(cq).getResultList();
+//
+//            for(Employee emp : emps) {
+//                System.out.println(emp);
+//            }
+
+            // 직책 수 조회1 -> 전체 갯수 출력
+//            Expression cntJob = cb.count(eq.get("jobid"));
+//            cq = query.select(cntJob);
+//            List<Employee> cnt = em.createQuery(cq).getResultList();
+//
+//            System.out.println(cnt);
+
+
+            // 직책 수 조회2 : distinct -> 해당 값들 출력
+//            cq = query.select(eq.get("jobid")).distinct(true);
+//            List<Employee> cnt = em.createQuery(cq).getResultList();
+//
+//            System.out.println(cnt);
+
+            // 직책 수 조회3 : countDistinct -> 중복 제외한 남은 갯수
+            Expression cntJob = cb.countDistinct(eq.get("jobid"));
+            cq = query.select(cntJob);
+            List<Employee> cnt = em.createQuery(cq).getResultList();
+
+            System.out.println(cnt);
+
+        } catch (Exception ex){
+            ex.printStackTrace();
         } finally {
             em.close();
             emf.close();

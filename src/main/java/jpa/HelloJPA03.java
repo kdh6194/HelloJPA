@@ -115,9 +115,12 @@ public class HelloJPA03 {
                 System.out.println(item[0] + "/" + item[1]);
 
             // 제공된 이름, 직책, 연봉으로 사원 조회 : 다중 쿼리
-            String fname = "";
-            String jobid = "";
-            Integer sal = 0;
+            // 직책이 IT_PROG인 사원 조회
+            // 연봉이 10000이상인 사원 조회
+            // 직책이 IT_PROG이고 연봉이 6000 이상인 사원 조회
+            String fname = "null";
+            String jobid = "IT_PROG";
+            Integer sal = 6000;
 
             jpql = "select e from Employee e";
             List<String> cndtns = new ArrayList<>(); // 조건절 저장 변수
@@ -153,8 +156,8 @@ public class HelloJPA03 {
                 System.out.println(e);
             }
 
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception ex){
+            ex.printStackTrace();
         } finally {
             em.close();
             emf.close();

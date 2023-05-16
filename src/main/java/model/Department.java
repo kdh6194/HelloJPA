@@ -13,12 +13,12 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DEPARTMENT_ID")
-    private Integer deptno;
+    private Long deptno;
     @Column(name = "DEPARTMENT_NAME")
     private String dname;
     @Column(name = "MANAGER_ID")
-    private Integer mgrid;
+    private Long mgrid;
     @Column(name = "LOCATION_ID")
-    private Integer locid;
+    private Long locid;
 
 }
