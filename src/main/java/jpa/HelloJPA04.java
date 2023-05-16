@@ -1,6 +1,6 @@
 package jpa;
 
-import model.Departments;
+import model.Department;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,7 +17,7 @@ public class HelloJPA04 {
 
         try {
             // 데이터 추가 : persist(대상)
-            Departments dept = new Departments();
+            Department dept = new Department();
             dept.setDname("IT");
             dept.setMgrid(103);
             dept.setLocid(1400);
@@ -28,18 +28,18 @@ public class HelloJPA04 {
 
             // 데이터 조회 : find(객체, 기본키 값)
             tx.begin();
-                dept = em.find(Departments.class,1);
+                dept = em.find(Department.class,1);
                 em.persist(dept);
             tx.commit();
              //데이터 수정 : setXxx(변경값)
             tx.begin();
-                dept = em.find(Departments.class,2); // 수정할 객체 찾기
+                dept = em.find(Department.class,2); // 수정할 객체 찾기
                 dept.setDname("jobs"); //  값 변경
                  em.persist(dept);
             tx.commit();
              //데이터 삭제 : remove(대상)
              tx.begin();
-                dept = em.find(Departments.class,3); // 삭제할 객체 찾기
+                dept = em.find(Department.class,3); // 삭제할 객체 찾기
                 em.remove(dept);
              tx.commit();
         } catch (Exception e){
