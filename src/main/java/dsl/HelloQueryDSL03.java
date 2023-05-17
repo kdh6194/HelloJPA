@@ -38,6 +38,7 @@ public class HelloQueryDSL03 {
             QEmployee qemp = QEmployee.employee;
             JPAQueryFactory query = new JPAQueryFactory(em);
 
+
 //            tx.begin();
 //                query.update(qemp)
 //                .set(qemp.fname,"abc123")
@@ -47,6 +48,11 @@ public class HelloQueryDSL03 {
 //                .where(qemp.empno.eq(998L))
 //                .execute();
 //            tx.commit();
+
+            // 이렇게도 작성 가능
+//            Employee employee = em.find(Employee.class, 1L);
+//            employee.setSalary(6000);
+//            em.merge(employee);
 
             // 사원데이터 삭제
 
