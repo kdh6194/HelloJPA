@@ -7,6 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Data
+@Table(name = "orders")
 public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,6 +28,14 @@ public class Orders {
     @Basic
     @Column(name = "orderdate")
     private String orderdate;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", insertable = false,updatable = false)
+    private Products product;
+
+    @ManyToOne
+    @JoinColumn(name = "custumer_id", insertable = false,updatable = false)
+    private Custumers custumer;
 
     @Override
     public boolean equals(Object o) {
