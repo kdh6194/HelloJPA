@@ -95,32 +95,32 @@ public class HelloJPA03 {
 //            for (Employee emp: pemps){System.out.println(emp);}
 
             // 직책별 평균 연봉 조회
-            jpql = "select jobid, avg(sal) from Employee e group by jobid";
+            jpql = "select jobid, avg(sal), count(jobid) from Employee e group by jobid";
 //            List<Object[]> select = em.createQuery(jpql).getResultList();
 //
 //            for (Object[] emp: select){System.out.println(emp[0] +  "/" + emp[1] + "/" + emp[2]);}
 
             // 사원 이름, 직책, 부서명 조회 : join
             jpql = "select e.fname, e.jobid, e.deptno, d.dname from Employee e inner join e.department d";
-            List<Object[]> items = em.createQuery(jpql).getResultList();
-
-            for (Object[] item : items)
-                System.out.println(item[0] + "/" + item[1] + "/" + item[2] + "/" + item[3]);
+//            List<Object[]> items = em.createQuery(jpql).getResultList();
+//
+//            for (Object[] item : items)
+//                System.out.println(item[0] + "/" + item[1] + "/" + item[2] + "/" + item[3]);
 
             // 부서명이 IT인 사원의 사번과 입사일 조회 : 서브 쿼리
             jpql = "select empno, hdate from Employee e where deptno = (select deptno from Department d where dname = 'IT')";
-            List<Object[]> items1 = em.createQuery(jpql).getResultList();
-
-            for (Object[] item : items)
-                System.out.println(item[0] + "/" + item[1]);
+//            List<Object[]> items1 = em.createQuery(jpql).getResultList();
+//
+//            for (Object[] item : items1)
+//                System.out.println(item[0] + "/" + item[1]);
 
             // 제공된 이름, 직책, 연봉으로 사원 조회 : 다중 쿼리
             // 직책이 IT_PROG인 사원 조회
             // 연봉이 10000이상인 사원 조회
             // 직책이 IT_PROG이고 연봉이 6000 이상인 사원 조회
-            String fname = "null";
+            String fname = null;
             String jobid = "IT_PROG";
-            Integer sal = 6000;
+            Long sal = 6000L;
 
             jpql = "select e from Employee e";
             List<String> cndtns = new ArrayList<>(); // 조건절 저장 변수

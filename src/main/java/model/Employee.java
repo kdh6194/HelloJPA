@@ -40,9 +40,9 @@ public class Employee {
     @Column(name = "DEPARTMENT_ID")
     private Long deptno;
 
-//    @ManyToOne // 테이블 연관 관계 = 다 : 1 -> 외래키 설정시작
-//    @JoinColumn(name = "department_id") // department 테이블의 id 컬럼과 조인
-//      private Department department;
+    @ManyToOne // 테이블 연관 관계 = 다 : 1 -> 외래키 설정시작
+    @JoinColumn(name = "department_id") // department 테이블의 id 컬럼과 조인
+      private Department department;
 //    @JoinColumn(name = "deptno", insertable = false,updatable = false)
 
     @Override
